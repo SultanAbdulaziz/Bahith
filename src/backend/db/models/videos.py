@@ -1,7 +1,9 @@
+import enum, uuid
 from datetime import datetime
+from typing import TYPE_CHECKING
+from sqlalchemy import Enum, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
-import enum
 
 class VideoStatus(enum.Enum):
     PENDING = "pending"
@@ -11,9 +13,11 @@ class VideoStatus(enum.Enum):
 
 class Video(Base):
     __tablename__ = "videos"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid7)
     path: Mapped[str]
-    status: Mapped[VideoStatus] = mapped_column(default="pending")
+    status: Mapped[VideoStatus] = mapped_column(Enum(VideoStatus, native_enum=False), default=VideoStatus.PENDING, index=True)
     error: Mapped[str | None]
+    duration: Mapped[float | None]
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     started_at: Mapped[datetime | None]
-    documents: Mapped[list["Document"]] = relationship(back_populates="video", cascade="all, delete-orphan")
+    documents: Mapped[list["Document"]] = relationship(back_populates="video", cascade="all, delete-orphan") #Documents.video points here
