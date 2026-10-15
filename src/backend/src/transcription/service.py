@@ -1,12 +1,15 @@
 import os
+import logging
 from groq import Groq
 import subprocess
 from .models import Transcription, Segment, Window, VideoTranscript
 
+logger = logging.getLogger(__name__)
+
 CHUNK_SECONDS = 600
 WINDOW_SECONDS = 15.0
 API_KEY = os.environ.get("GROQ_API_KEY")
-client = Groq(api_key=API_KEY)
+client = Groq(api_key=API_KEY, max_retries=3)
 
 
 def transcribe(data: bytes, filename: str, offset: float) -> list[Segment]:
@@ -43,8 +46,8 @@ def extract_audio(path: str, start: float) -> bytes:
     result = subprocess.run(command, capture_output=True)
 
     if result.returncode != 0:
-        error = result.stderr.decode().strip()
-        raise RuntimeError(f"ffmpeg failed: {error}")
+        logger.error("ffmpeg failed: %s", result.stderr.decode().strip())
+        raise RuntimeError("ffmpeg failed")
 
     return result.stdout
 
@@ -63,7 +66,8 @@ def get_duration(path: str) -> float:
         capture_output=True, text=True,
     )
     if result.returncode != 0:
-        raise RuntimeError(f"ffprobe failed: {result.stderr.strip()}")
+        logger.error("ffprobe failed: %s", result.stderr.strip())
+        raise RuntimeError("ffprobe failed")
     return float(result.stdout)
 
 def transcribe_chunk(path: str, offset: float) -> list[Segment]:

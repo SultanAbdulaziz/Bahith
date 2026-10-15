@@ -2,3 +2,4 @@
 src/backend/test_data/
 __pycache__/
 *.pyc
+docs
