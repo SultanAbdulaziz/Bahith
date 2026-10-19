@@ -1,7 +1,6 @@
 import enum, uuid
 from datetime import datetime
-from typing import TYPE_CHECKING
-from sqlalchemy import Enum, func
+from sqlalchemy import Enum, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
@@ -14,6 +13,7 @@ class VideoStatus(enum.Enum):
 class Video(Base):
     __tablename__ = "videos"
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid7)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
     storage_key: Mapped[str]
     status: Mapped[VideoStatus] = mapped_column(Enum(VideoStatus, native_enum=False), default=VideoStatus.PENDING, index=True)
     error: Mapped[str | None]

@@ -11,4 +11,5 @@ class Document(Base):
     start: Mapped[float]
     end: Mapped[float]
     text: Mapped[str]
+    length: Mapped[int]
     video: Mapped["Video"] = relationship(back_populates="documents")   #Video.documents points here

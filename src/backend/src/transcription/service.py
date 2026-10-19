@@ -15,7 +15,7 @@ client = Groq(api_key=API_KEY, max_retries=3)
 def transcribe(data: bytes, filename: str, offset: float) -> list[Segment]:
   transcription = client.audio.transcriptions.create(
     file=(filename, data),
-    model="whisper-large-v3",
+    model="whisper-large-v3-turbo",
     response_format="verbose_json",  # Optional
     timestamp_granularities=["segment"],
     temperature=0.0

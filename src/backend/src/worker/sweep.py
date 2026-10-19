@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import select, update, or_, and_
 from db.session import localSession
 from db.models import Video
-from db.models.videos import VideoStatus
+from db.models.video import VideoStatus
 from .job import job
 from sqlalchemy.orm import Session
 
@@ -12,7 +12,7 @@ POLL_SECONDS = 3
 STUCK_AFTER = timedelta(hours=1)
 
 def claim_next(db: Session) -> Video:
-    video: Video = db.scalars(
+    row = db.execute(
         select(Video)
         .where(or_(
             Video.status == VideoStatus.PENDING,
@@ -20,6 +20,7 @@ def claim_next(db: Session) -> Video:
             and_(Video.status == VideoStatus.PROCESSING, Video.started_at < datetime.now() - STUCK_AFTER),
         )).order_by(Video.created_at).limit(1).with_for_update(skip_locked=True)
     ).first()
+    video: Video | None = row[0] if row else None
 
     if video:
         video.status = VideoStatus.PROCESSING
