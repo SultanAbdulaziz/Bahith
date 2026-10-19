@@ -2,17 +2,29 @@
 
 Run:  uvicorn core.api:app --app-dir src
 
-Indexes live in memory and are lost on restart.
+Documents are stored in the database from CORE_DATABASE_URL (see storage.py).
+Indexes are built from them on first use and kept in memory. Run one worker
+only: the cache is not shared, so other workers would serve stale indexes.
 """
 
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
+from . import storage
 from .search import Index, bm25_search, boolean_search, create_index, document_lengths, tokenize
 
-app = FastAPI(title="IR core")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    storage.init()
+    yield
+
+
+app = FastAPI(title="IR core", lifespan=lifespan)
 
 
 class Document(BaseModel):
@@ -40,19 +52,28 @@ class StoredIndex:
         self.lengths = document_lengths(corpus)
 
 
-indexes: dict[str, StoredIndex] = {}
-
+cache: dict[str, StoredIndex] = {}
 
 def get(name: str) -> StoredIndex:
-    if name not in indexes:
+    cached = cache.get(name)
+    if cached is not None:
+        return cached
+    documents = storage.load(name)
+    if documents is None:
         raise HTTPException(404, f"index {name!r} not found")
-    return indexes[name]
+    stored = StoredIndex([Document(**document) for document in documents])
+    cache[name] = stored
+    return stored
 
 
 @app.post("/indexes", status_code=201)
 def create(body: CreateIndexRequest) -> dict[str, Any]:
+    ids = [document.id for document in body.documents]
+    if len(set(ids)) != len(ids):
+        raise HTTPException(422, "document ids must be unique")
+    storage.save(body.name, [document.model_dump() for document in body.documents])
     stored = StoredIndex(body.documents)
-    indexes[body.name] = stored
+    cache[body.name] = stored
     return {"name": body.name, "documents": len(stored.documents), "terms": len(stored.index)}
 
 
@@ -96,5 +117,6 @@ def search(name: str, body: SearchRequest) -> dict[str, Any]:
 
 @app.delete("/indexes/{name}", status_code=204)
 def delete(name: str) -> None:
-    get(name)
-    del indexes[name]
+    cache.pop(name, None)
+    if not storage.remove(name):
+        raise HTTPException(404, f"index {name!r} not found")

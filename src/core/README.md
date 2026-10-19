@@ -51,7 +51,12 @@ uvicorn core.api:app --app-dir src --reload
 Interactive API docs: <http://127.0.0.1:8000/docs>.
 
 Documents are `{id, text, metadata}`. `metadata` is returned untouched.
-Indexes are kept in memory and are lost on restart.
+Creating an index with an existing name replaces it.
+
+## Storage
+
+Documents are stored in the database set by `CORE_DATABASE_URL`. The default is
+`sqlite:///core.db` in the working directory. 
 
 ```bash
 curl -X POST localhost:8000/indexes -H 'Content-Type: application/json' -d '{
