@@ -1,6 +1,6 @@
 import enum, uuid
 from datetime import datetime
-from sqlalchemy import Enum, func, ForeignKey
+from sqlalchemy import DateTime, Enum, func, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
@@ -19,6 +19,6 @@ class Video(Base):
     error: Mapped[str | None]
     attempts: Mapped[int] = mapped_column(default=0)
     duration: Mapped[float | None]
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
-    started_at: Mapped[datetime | None]
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     documents: Mapped[list["Document"]] = relationship(back_populates="video", cascade="all, delete-orphan") #Documents.video points here

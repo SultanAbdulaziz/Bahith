@@ -1,5 +1,5 @@
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from sqlalchemy import select, update, or_, and_
 from db.session import localSession
 from db.models import Video
@@ -17,14 +17,14 @@ def claim_next(db: Session) -> Video:
         .where(or_(
             Video.status == VideoStatus.PENDING,
             and_(Video.status == VideoStatus.FAILED, Video.attempts < MAX_ATTEMPTS),
-            and_(Video.status == VideoStatus.PROCESSING, Video.started_at < datetime.now() - STUCK_AFTER),
+            and_(Video.status == VideoStatus.PROCESSING, Video.started_at < datetime.now(UTC) - STUCK_AFTER),
         )).order_by(Video.created_at).limit(1).with_for_update(skip_locked=True)
     ).first()
     video: Video | None = row[0] if row else None
 
     if video:
         video.status = VideoStatus.PROCESSING
-        video.started_at = datetime.now()
+        video.started_at = datetime.now(UTC)
         db.commit()
     return video
 
