@@ -6,7 +6,7 @@ from . import service as searchService
 from .engine import bm25_search, boolean_search
 from typing import Literal
 
-searchRouter = APIRouter(prefix="/search")
+searchRouter = APIRouter(prefix="/search") # hello
 
 
 @searchRouter.get("")
