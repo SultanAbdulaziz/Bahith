@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from db.session import get_db
 from src.auth.middleware import authorizeUser
 from . import service as searchService
-from .engine import bm25_search, boolean_search, create_index, document_lengths
+from .engine import bm25_search, boolean_search
 from typing import Literal
 
 searchRouter = APIRouter(prefix="/search")
@@ -17,20 +17,15 @@ def search(
     user_id = Depends(authorizeUser),
     db: Session = Depends(get_db),
 ):
-    rows = searchService.getUserDocuments(db, user_id)
-    corpus = [row.text for row in rows]
-    index = create_index(corpus)
+    userIndex = searchService.getUserIndex(db, user_id)
 
     if mode == "boolean":
-        matches = boolean_search(query, index)
-        total = len(matches)
-        hits = [(position, None) for position in matches[: k]]
+        matches = [(position, None) for position in boolean_search(query, userIndex.index)]
     else:
-        hits = bm25_search(query, index, document_lengths(corpus), k)
-        total = len(hits)
+        matches = bm25_search(query, userIndex.index, userIndex.lengths, k=None)  # all matches, best first
     return {
         "query": query,
         "mode": mode,
-        "total": total,
-        "results": [{**rows[position]._asdict(), "score": score} for position, score in hits],
+        "total": len(matches),
+        "results": [{**userIndex.rows[position]._asdict(), "score": score} for position, score in matches[:k]],
     }
