@@ -2,8 +2,8 @@ import time
 from datetime import datetime, timedelta, UTC
 from sqlalchemy import select, update, or_, and_
 from db.session import localSession
-from db.models import Video
-from db.models.video import VideoStatus
+from db.models import File
+from db.models.file import FileStatus
 from .job import job
 from sqlalchemy.orm import Session
 
@@ -11,37 +11,37 @@ MAX_ATTEMPTS = 3
 POLL_SECONDS = 3
 STUCK_AFTER = timedelta(hours=1)
 
-def claim_next(db: Session) -> Video:
+def claim_next(db: Session) -> File:
     row = db.execute(
-        select(Video)
+        select(File)
         .where(or_(
-            Video.status == VideoStatus.PENDING,
-            and_(Video.status == VideoStatus.FAILED, Video.attempts < MAX_ATTEMPTS),
-            and_(Video.status == VideoStatus.PROCESSING, Video.started_at < datetime.now(UTC) - STUCK_AFTER),
-        )).order_by(Video.created_at).limit(1).with_for_update(skip_locked=True)
+            File.status == FileStatus.PENDING,
+            and_(File.status == FileStatus.FAILED, File.attempts < MAX_ATTEMPTS),
+            and_(File.status == FileStatus.PROCESSING, File.started_at < datetime.now(UTC) - STUCK_AFTER),
+        )).order_by(File.created_at).limit(1).with_for_update(skip_locked=True)
     ).first()
-    video: Video | None = row[0] if row else None
+    file: File | None = row[0] if row else None
 
-    if video:
-        video.status = VideoStatus.PROCESSING
-        video.started_at = datetime.now(UTC)
+    if file:
+        file.status = FileStatus.PROCESSING
+        file.started_at = datetime.now(UTC)
         db.commit()
-    return video
+    return file
 
 def run():
     while True:
         with localSession() as db:
-            video: Video = claim_next(db)
-            if video is None:
+            file: File = claim_next(db)
+            if file is None:
                 time.sleep(POLL_SECONDS)
                 continue
             try:
-                job(db, video)
+                job(db, file)
             except Exception as e:
                 db.rollback()
-                video.status = VideoStatus.FAILED
-                video.error = str(e)
-                video.attempts += 1
+                file.status = FileStatus.FAILED
+                file.error = str(e)
+                file.attempts += 1
                 db.commit()
 
 if __name__ == "__main__":

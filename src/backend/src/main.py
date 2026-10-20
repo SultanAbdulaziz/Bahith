@@ -2,12 +2,14 @@ from fastapi import APIRouter, FastAPI
 from fastapi.responses import JSONResponse
 from src.auth.service import AuthError
 from src.auth.routes import authRouter
+from src.search.routes import searchRouter
 
 app = FastAPI(title="videoIR")
 
 #Main Router (api_router) .include_router() to mount service routers ~Sultan
 api_router = APIRouter(prefix="/api")
 api_router.include_router(authRouter)
+api_router.include_router(searchRouter)
 
 @api_router.get("/health")
 def health():
