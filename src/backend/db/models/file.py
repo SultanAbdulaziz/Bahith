@@ -5,6 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
 class FileStatus(enum.Enum):
+    UPLOADING = "uploading"
     PENDING = "pending"
     PROCESSING = "processing"
     DONE = "done"
