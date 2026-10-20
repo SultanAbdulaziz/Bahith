@@ -38,7 +38,7 @@ def createSession(db: Session, user_id: uuid.UUID) -> str:
     db.commit()
     return signRefreshToken(str(user_id), str(session_id), expires_at)
 
-def register(db: Session, email: str, password: str, name: str | None = None) -> tuple[str, str]:
+def register(db: Session, email: str, password: str, name: str | None = None, guest_id: uuid.UUID | None = None) -> tuple[str, str]:
     email = email.strip().lower()
     if len(password) < MIN_PASSWORD_LENGTH:
         raise AuthError(f"password must be at least {MIN_PASSWORD_LENGTH} characters")
@@ -48,14 +48,26 @@ def register(db: Session, email: str, password: str, name: str | None = None) ->
         raise AuthError("email already registered")
 
     password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
-    (user,) = db.execute(
-        insert(User)
-        .values(email=email, name=name, password_hash=password_hash, is_guest=False)
-        .returning(User)
-    ).one()
+    values = dict(email=email, name=name, password_hash=password_hash, is_guest=False)
+
+    row = None
+    if guest_id:
+        row = db.execute(
+            update(User)
+            .where(User.id == guest_id, User.is_guest.is_(True))
+            .values(**values)
+            .returning(User.id)
+        ).first()
+    if row is None:
+        row = db.execute(insert(User).values(**values).returning(User.id)).one()
+    
+    if guest_id and row is None:
+        raise AuthError("already registered")
+
+    user_id = row[0]
     db.commit()
-    access_token = signAccessToken(str(user.id))
-    refresh_token = createSession(db, user.id)
+    access_token = signAccessToken(str(user_id))
+    refresh_token = createSession(db, user_id)
     return access_token, refresh_token
 
 def login(db: Session, email: str, password_attempt: str) -> tuple[str, str]:
