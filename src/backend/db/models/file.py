@@ -1,10 +1,11 @@
 import enum, uuid
 from datetime import datetime
-from sqlalchemy import DateTime, Enum, func, ForeignKey
+from sqlalchemy import DateTime, Enum, func, ForeignKey, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 
 class FileStatus(enum.Enum):
+    UPLOADING = "uploading"
     PENDING = "pending"
     PROCESSING = "processing"
     DONE = "done"
@@ -19,7 +20,7 @@ class File(Base):
     status: Mapped[FileStatus] = mapped_column(Enum(FileStatus, native_enum=False), default=FileStatus.PENDING, index=True)
     error: Mapped[str | None]
     attempts: Mapped[int] = mapped_column(default=0)
-    duration: Mapped[float | None]
+    meta: Mapped[dict] = mapped_column("metadata", JSON, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     documents: Mapped[list["Document"]] = relationship(back_populates="file", cascade="all, delete-orphan") #Documents.file points here

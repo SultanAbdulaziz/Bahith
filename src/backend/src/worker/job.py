@@ -19,6 +19,6 @@ def job(db: Session, file: File):
         )
         db.add(document)
     file.status = FileStatus.DONE
-    file.duration = transcript.duration
+    file.meta = {"duration": transcript.duration}
     db.commit()
 

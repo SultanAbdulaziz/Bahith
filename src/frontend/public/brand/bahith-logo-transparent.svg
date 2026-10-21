@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" width="600" height="480">
+  <title>باحث</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400&amp;display=swap');
+  </style>
+  <g transform="translate(108 -63) scale(6)">
+    <path d="M16 36.5A16 16 0 0 1 48 36.5Z" fill="#0a0a0a"/>
+    <path d="M10 40H54" stroke="#0a0a0a" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="25" cy="29.5" r="4.5" fill="#ffffff"/>
+    <circle cx="23.5" cy="28.5" r="2.4" fill="#0a0a0a"/>
+    <path d="M44.4 34.4C46.5 38.5 50 40.5 52.5 38.5" fill="none" stroke="#f5c542" stroke-width="1.2" stroke-linecap="round"/>
+    <circle cx="39" cy="29" r="8.2" fill="#0a0a0a"/>
+    <circle cx="39" cy="29" r="7.4" fill="#f5c542"/>
+    <circle cx="39" cy="29" r="5.9" fill="#ffffff"/>
+    <circle cx="37.3" cy="28" r="3.2" fill="#0a0a0a"/>
+  </g>
+  <text x="300" y="375" text-anchor="middle" direction="rtl" font-family="'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif" font-weight="400" font-size="170" fill="#0a0a0a">باحث</text>
+</svg>

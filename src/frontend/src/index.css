@@ -1,0 +1,327 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/baloo-bhaijaan-2";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Design tokens and rules are documented in design.md. */
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Baloo Bhaijaan 2 Variable', sans-serif;
+    --color-ink: var(--ink);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /* Brand: the logo's yellow and black. */
+    --ink: #0a0a0a;
+    --shadow: #0a0a0a;
+    --background: #fff8e7;
+    --foreground: #0a0a0a;
+    --card: #ffffff;
+    --card-foreground: #0a0a0a;
+    --popover: #ffffff;
+    --popover-foreground: #0a0a0a;
+    --primary: #f5c542;
+    --primary-foreground: #0a0a0a;
+    --secondary: #ffeeb8;
+    --secondary-foreground: #0a0a0a;
+    --muted: #fdf1cf;
+    --muted-foreground: #57534e;
+    --accent: #ffe48a;
+    --accent-foreground: #0a0a0a;
+    --destructive: #e5484d;
+    --border: rgb(10 10 10 / 0.14);
+    --input: #0a0a0a;
+    --ring: #0a0a0a;
+    --chart-1: #f5c542;
+    --chart-2: #0a0a0a;
+    --chart-3: #57534e;
+    --chart-4: #ffe48a;
+    --chart-5: #e5484d;
+    --radius: 1rem;
+    --sidebar: #fff1c2;
+    --sidebar-foreground: #0a0a0a;
+    --sidebar-primary: #f5c542;
+    --sidebar-primary-foreground: #0a0a0a;
+    --sidebar-accent: #ffe48a;
+    --sidebar-accent-foreground: #0a0a0a;
+    --sidebar-border: #0a0a0a;
+    --sidebar-ring: #0a0a0a;
+}
+
+.dark {
+    --ink: #f5f0e1;
+    --shadow: #f5c542;
+    --background: #140d08;
+    --foreground: #f5f0e1;
+    --card: #2b1f15;
+    --card-foreground: #f5f0e1;
+    --popover: #2b1f15;
+    --popover-foreground: #f5f0e1;
+    --primary: #f5c542;
+    --primary-foreground: #0a0a0a;
+    --secondary: #3b2b1d;
+    --secondary-foreground: #f5f0e1;
+    --muted: #33251a;
+    --muted-foreground: #c2b29c;
+    --accent: #4a3621;
+    --accent-foreground: #f5f0e1;
+    --destructive: #ff6b6f;
+    --border: rgb(245 240 225 / 0.14);
+    --input: #f5f0e1;
+    --ring: #f5c542;
+    --sidebar: #261a11;
+    --sidebar-foreground: #f5f0e1;
+    --sidebar-primary: #f5c542;
+    --sidebar-primary-foreground: #0a0a0a;
+    --sidebar-accent: #3b2b1d;
+    --sidebar-accent-foreground: #f5f0e1;
+    --sidebar-border: #f5f0e1;
+    --sidebar-ring: #f5c542;
+}
+
+/* The chunky look: a thick ink outline and a hard offset shadow. */
+@utility chunky {
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 0 var(--shadow);
+}
+@utility chunky-sm {
+    border: 2px solid var(--ink);
+    box-shadow: 2px 2px 0 0 var(--shadow);
+}
+@utility chunky-lg {
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 0 var(--shadow);
+}
+/* Lifts on hover and squishes into its shadow when pressed. Pair with a chunky utility. */
+@utility pressable {
+    transition: translate 0.12s ease, box-shadow 0.12s ease;
+    &:hover {
+        translate: -1px -1px;
+    }
+    &:active {
+        translate: 2px 2px;
+        box-shadow: 0 0 0 0 var(--shadow);
+    }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+    }
+  html {
+    @apply font-sans scroll-smooth;
+    }
+}
+
+/* shadcn components, restyled through their data-slot hooks so the generated files stay as the CLI made them.
+   These rules are unlayered on purpose: they win over the components' own utility classes. */
+[data-slot="button"] {
+    border: 2px solid var(--ink);
+    font-weight: 700;
+    box-shadow: 3px 3px 0 0 var(--shadow);
+    transition: translate 0.12s ease, box-shadow 0.12s ease, background-color 0.15s ease;
+}
+[data-slot="button"]:not(:disabled):hover {
+    translate: -1px -1px;
+    box-shadow: 4px 4px 0 0 var(--shadow);
+}
+[data-slot="button"]:not(:disabled):active {
+    translate: 2px 2px;
+    box-shadow: 0 0 0 0 var(--shadow);
+}
+[data-slot="button"][data-variant="default"],
+[data-slot="button"][data-variant="default"]:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+[data-slot="button"][data-variant="outline"],
+[data-slot="button"][data-variant="secondary"] {
+    background: var(--card);
+    color: var(--foreground);
+}
+[data-slot="button"][data-variant="outline"]:hover,
+[data-slot="button"][data-variant="secondary"]:hover {
+    background: var(--secondary);
+}
+[data-slot="button"][data-variant="destructive"] {
+    background: var(--destructive);
+    color: #fff;
+}
+[data-slot="button"][data-variant="ghost"],
+[data-slot="button"][data-variant="link"],
+[data-slot="button"][data-variant="ghost"]:hover,
+[data-slot="button"][data-variant="link"]:hover {
+    border-color: transparent;
+    box-shadow: none;
+    translate: none;
+}
+
+[data-slot="input"] {
+    border: 2px solid var(--ink);
+    background: var(--card);
+}
+[data-slot="input"]:focus-visible {
+    border-color: var(--ink);
+    box-shadow: 3px 3px 0 0 var(--primary);
+}
+
+[data-slot="badge"] {
+    border: 2px solid var(--ink);
+    font-weight: 700;
+}
+
+[data-slot="tabs-list"] {
+    border: 2px solid var(--ink);
+    background: var(--muted);
+}
+[data-slot="tabs-trigger"] {
+    font-weight: 700;
+}
+[data-slot="tabs-trigger"][data-state="active"] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+[data-slot="toggle-group-item"] {
+    border: 2px solid var(--ink);
+    font-weight: 700;
+}
+[data-slot="toggle-group-item"][data-state="on"] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+[data-slot="progress"] {
+    height: 0.75rem;
+    border: 2px solid var(--ink);
+    background: var(--card);
+}
+
+[data-slot="dialog-content"],
+[data-slot="alert-dialog-content"] {
+    border: 2px solid var(--ink);
+    box-shadow: 6px 6px 0 0 var(--shadow);
+}
+[data-slot="dropdown-menu-content"] {
+    border: 2px solid var(--ink);
+    box-shadow: 4px 4px 0 0 var(--shadow);
+}
+
+[data-slot="sidebar-container"][data-side="left"] {
+    border-right: 2px solid var(--ink);
+}
+[data-slot="sidebar-container"][data-side="right"] {
+    border-left: 2px solid var(--ink);
+}
+[data-slot="sidebar-menu-button"][data-active="true"] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 700;
+}
+
+.cn-toast {
+    border: 2px solid var(--ink) !important;
+    box-shadow: 4px 4px 0 0 var(--shadow) !important;
+    font-weight: 600;
+}
+
+/* The mascot (src/components/shared/mascot.tsx). Each mood is a class on the svg. */
+.mascot .head,
+.mascot .eye {
+    transform-box: fill-box;
+}
+/* The head hinges at the left corner of its mouth (16, 36.5 in the mark's coordinates). */
+.mascot .head {
+    transform-origin: 0% 80%;
+    transition: rotate 0.15s ease;
+}
+.mascot .eye {
+    transform-origin: center;
+    animation: mascot-blink 4.5s infinite;
+}
+.mascot.talking .head {
+    animation: mascot-talk 0.32s ease-in-out infinite alternate;
+}
+.mascot.searching {
+    animation: mascot-bob 0.9s ease-in-out infinite;
+}
+.mascot.searching .pupil {
+    animation: mascot-look 1.4s ease-in-out infinite;
+}
+.mascot.sad .head {
+    rotate: 6deg;
+}
+.mascot.sad .pupil {
+    translate: 0 1px;
+}
+
+@keyframes mascot-blink {
+    0%, 92%, 100% { scale: 1 1; }
+    95% { scale: 1 0.1; }
+}
+@keyframes mascot-talk {
+    from { rotate: 0deg; }
+    to { rotate: -14deg; }
+}
+@keyframes mascot-bob {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -6%; }
+}
+@keyframes mascot-look {
+    0%, 100% { translate: -1.4px 0; }
+    50% { translate: 1.4px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mascot,
+    .mascot * {
+        animation: none !important;
+    }
+}

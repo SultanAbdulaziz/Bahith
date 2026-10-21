@@ -30,8 +30,12 @@ def setAuthCookies(response: Response, access_token: str, refresh_token: str):
 
 
 @authRouter.post("/register", status_code=204)
-def register(body: models.RegisterRequest, response: Response, db: Session = Depends(get_db)):
-    access_token, refresh_token = authService.register(db, body.email, body.password, body.name)
+def register(body: models.RegisterRequest, request: Request, response: Response, db: Session = Depends(get_db)):
+    try:
+        guest_id = middleware.authorizeUser(request)
+    except authService.AuthError:
+        guest_id = None
+    access_token, refresh_token = authService.register(db, body.email, body.password, body.name, guest_id)
     setAuthCookies(response, access_token, refresh_token)
 
 @authRouter.post("/login")
@@ -64,6 +68,7 @@ def guest(response: Response, db: Session = Depends(get_db)):
     setAuthCookies(response, access_token, refresh_token)
 
 #todo later
+"""
 @authRouter.post("/forgot-password")
 def forgot_password():
     pass
@@ -79,3 +84,4 @@ def google_login():
 @authRouter.get("/google/callback")
 def google_callback():
     pass
+"""
