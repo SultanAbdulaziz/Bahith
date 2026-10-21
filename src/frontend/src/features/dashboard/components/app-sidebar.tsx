@@ -1,4 +1,4 @@
-import { FilmIcon, SearchIcon } from "lucide-react"
+import { FilmIcon, MessagesSquareIcon, SearchIcon } from "lucide-react"
 import * as React from "react"
 import { useTranslation } from "react-i18next"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
@@ -17,6 +17,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   const navMain = [
     { title: t("app.nav.search"), url: "/app/search", icon: <SearchIcon /> },
+    { title: t("app.nav.chat"), url: "/app/chat", icon: <MessagesSquareIcon /> },
     { title: t("app.nav.files"), url: "/app/files", icon: <FilmIcon /> },
   ]
 

@@ -8,13 +8,13 @@ import type { SearchResult } from "../types"
 
 type VideoPanelProps = {
   videoRef: RefObject<HTMLVideoElement | null>
-  active: SearchResult | null
+  active: Pick<SearchResult, "text" | "meta"> | null
   activeLabel?: string
   onLoadedMetadata: () => void
   onError: () => void
 }
 
-// The player next to the results, with a placeholder until a result is picked and the result's text under it.
+// The player next to the search results or the chat, with a placeholder until a moment is picked and its text under it.
 export function VideoPanel({ videoRef, active, activeLabel, onLoadedMetadata, onError }: VideoPanelProps) {
   const { t } = useTranslation()
 

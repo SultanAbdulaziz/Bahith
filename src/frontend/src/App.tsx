@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router"
 import AuthPage from "@/features/auth/auth-page"
+import ChatPage from "@/features/chat/chat-page"
 import DashboardLayout from "@/features/dashboard/dashboard-layout"
 import FilesPage from "@/features/files/files-page"
 import LandingPage from "@/features/landing/landing-page"
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/app" element={<DashboardLayout />}>
           <Route index element={<Navigate to="search" replace />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path="chat" element={<ChatPage />} />
           <Route path="files" element={<FilesPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -228,6 +228,7 @@
     "nav": {
       "section": "Menu",
       "search": "Search",
+      "chat": "Chat",
       "files": "My videos"
     },
     "guestCard": {
@@ -257,6 +258,7 @@
         "done": "Ready",
         "failed": "Failed"
       },
+      "watch": "Watch",
       "deleteTitle": "Delete this video?",
       "deleteBody": "It will be removed completely and won't show up in search anymore.",
       "deleted": "Video deleted."
@@ -276,15 +278,30 @@
       },
       "startTitle": "Search your videos",
       "startBody": "Type a word or phrase that was said in one of your videos.",
-      "noVideosTitle": "Nothing to search yet",
-      "noVideosBody": "Upload a video first. Once it's ready, you can search it here.",
+      "noVideosTitle": "No videos yet",
+      "noVideosBody": "Upload a video first. Once it's ready, you can search it and ask about it here.",
       "noVideosAction": "Go to my videos",
       "noResultsTitle": "No results",
       "noResultsBody": "Try a different word. Search matches whole words only.",
       "resultsCount": "Results: {{count}}",
       "matchesCount": "Matches: {{total}}, showing {{count}}",
-      "playerEmpty": "Pick a result to play it here.",
+      "playerEmpty": "Pick a moment to play it here.",
       "playError": "Couldn't play this video."
+    },
+    "chat": {
+      "eyebrow": "Chat",
+      "title": "Ask your videos",
+      "placeholder": "Ask anything about your videos…",
+      "allVideos": "All videos",
+      "send": "Send",
+      "newChat": "New chat",
+      "emptyTitle": "Ask me about your videos",
+      "emptyBody": "I'll answer from what was said in them and show you where, so you can jump to the moment.",
+      "thinking": "Looking through your videos…",
+      "sources": "Sources: {{count}}",
+      "noResults": "I couldn't find anything about that in your videos. Try other words, or check that the video has finished processing.",
+      "failed": "I couldn't answer that right now. Please try again.",
+      "busy": "Too many questions right now. Wait a moment and try again."
     }
   }
 }

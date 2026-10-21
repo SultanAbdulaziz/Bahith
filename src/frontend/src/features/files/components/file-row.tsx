@@ -1,4 +1,4 @@
-import { CircleAlertIcon, CircleCheckIcon, ClockIcon, FilmIcon, Trash2Icon } from "lucide-react"
+import { CircleAlertIcon, CircleCheckIcon, ClockIcon, FilmIcon, PlayIcon, Trash2Icon } from "lucide-react"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
 import { toast } from "sonner"
@@ -23,6 +23,7 @@ import { useLanguage } from "@/providers/language-provider"
 import { useTheme } from "@/providers/theme-provider"
 import { useFiles } from "../files-provider"
 import type { FileStatus, VideoFile } from "../types"
+import { VideoDialog } from "./video-dialog"
 
 const STATUS_ICON: Record<FileStatus, ReactNode> = {
   uploading: <ClockIcon />,
@@ -50,9 +51,22 @@ export function FileRow({ file }: { file: VideoFile }) {
 
   return (
     <li className="flex items-center gap-4 p-4 transition-colors hover:bg-muted/60">
-      <span className="flex size-10 shrink-0 items-center justify-center rounded-xl chunky-sm bg-primary">
-        <FilmIcon className="size-5 text-primary-foreground" />
-      </span>
+      {/* Any video that reached storage can be watched, even before it's ready to search. */}
+      {file.status === "uploading" ? (
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl chunky-sm bg-primary">
+          <FilmIcon className="size-5 text-primary-foreground" />
+        </span>
+      ) : (
+        <VideoDialog file={file} title={formatDate(file.created_at, lang)}>
+          <button
+            type="button"
+            aria-label={t("app.files.watch")}
+            className="pressable flex size-10 shrink-0 items-center justify-center rounded-xl chunky-sm bg-primary"
+          >
+            <PlayIcon className="size-5 fill-primary-foreground text-primary-foreground" />
+          </button>
+        </VideoDialog>
+      )}
 
       <div className="min-w-0 flex-1">
         <p className="truncate font-medium">{formatDate(file.created_at, lang)}</p>

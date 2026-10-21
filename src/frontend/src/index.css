@@ -3,6 +3,9 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/baloo-bhaijaan-2";
 
+/* Streamdown (chat answers) ships Tailwind classes Tailwind must see. */
+@source "../node_modules/streamdown/dist/*.js";
+
 @custom-variant dark (&:is(.dark *));
 
 /* Design tokens and rules are documented in design.md. */
@@ -212,6 +215,16 @@
     box-shadow: 3px 3px 0 0 var(--primary);
 }
 
+/* The chat's question box (AI Elements prompt input). */
+[data-slot="input-group"] {
+    border: 2px solid var(--ink);
+    border-radius: 1.25rem;
+    background: var(--background);
+}
+[data-slot="input-group"]:focus-within {
+    box-shadow: 3px 3px 0 0 var(--primary);
+}
+
 [data-slot="badge"] {
     border: 2px solid var(--ink);
     font-weight: 700;
@@ -249,7 +262,8 @@
     border: 2px solid var(--ink);
     box-shadow: 6px 6px 0 0 var(--shadow);
 }
-[data-slot="dropdown-menu-content"] {
+[data-slot="dropdown-menu-content"],
+[data-slot="select-content"] {
     border: 2px solid var(--ink);
     box-shadow: 4px 4px 0 0 var(--shadow);
 }

@@ -66,7 +66,8 @@ Installed with `npx shadcn@latest add …`. **Don't edit the files in `src/compo
 - `button`: ink outline, hard shadow, press effect. `default` is yellow, `outline`/`secondary` are white cards,
   `ghost`/`link` have no outline. Background colors come from these rules, so a `className` can't override a button's background.
 - `input`, `badge`, `tabs-list`/`tabs-trigger` (active = yellow), `toggle-group-item` (on = yellow), `progress`,
-  `dialog-content`, `alert-dialog-content`, `dropdown-menu-content`, the sidebar edge and active sidebar item, toasts.
+  `dialog-content`, `alert-dialog-content`, `dropdown-menu-content`, `select-content`, `input-group` (the chat's question box),
+  the sidebar edge and active sidebar item, toasts.
 
 The dashboard shell is the shadcn `sidebar-07` block (`src/features/dashboard/components/`).
 
@@ -81,11 +82,19 @@ Changes made to them, all marked with a comment where they are:
 In use: `CardNav` (nav), `Balatro` (hero background), `HoloCard` (hero), `SplitText` (hero headline), `ShinyText` ("Getting ready" status),
 `AnimatedContent` (result lists), `ClickSpark` (whole app).
 
+### AI Elements
+
+The chat page uses Vercel's AI Elements, a shadcn registry: `npx shadcn@latest add https://registry.ai-sdk.dev/<name>.json`.
+They land in `src/components/ai-elements/` and, like `ui/`, aren't edited (ESLint skips them). Style them with `className`
+where they're used, or through `data-slot` rules. In use: `Conversation` (scrolls and sticks to the newest message),
+`Message` + `MessageResponse` (renders the answer's markdown with Streamdown), `PromptInput` (question box + video picker), `Sources`.
+
 ### Patterns
 
 - **Section heading**: `SectionHeading` = a yellow `Eyebrow` pill ("#01 / Features") + an extra-bold title + an optional subtitle.
 - **Sticker**: the accent line of a headline: `inline-block -rotate-2 rounded-2xl chunky-lg bg-primary px-5 text-primary-foreground`.
 - **Time chip**: `rounded-full chunky-sm bg-primary px-2 text-xs font-bold tabular-nums` with a play icon.
+- **Citation chip**: the same yellow round chip with a source's number; `[n]` in a chat answer becomes one, and clicking it plays that moment.
 - **Speech bubble**: `rounded-2xl rounded-es-sm chunky-sm bg-secondary`, next to the mascot.
 - **Feature cards**: `rounded-3xl chunky bg-card` with a yellow icon tile; neighbors tilt opposite ways (`±rotate-1`).
 
@@ -96,8 +105,8 @@ In use: `CardNav` (nav), `Balatro` (hero background), `HoloCard` (hero), `SplitT
 | Mood | What it does | Where |
 |---|---|---|
 | `idle` | Blinks now and then. | Start states, empty file list. |
-| `talking` | The head hinges open and closed. | The demo, for 1.6s when an answer arrives; the login page. |
-| `searching` | Bobs and looks left and right. | While searching; while the dashboard loads. |
+| `talking` | The head hinges open and closed. | The demo and the chat, for 1.6s when an answer arrives; the login page. |
+| `searching` | Bobs and looks left and right. | While searching or the chat is thinking; while the dashboard loads. |
 | `sad` | Head droops, looks down. | No results; no videos to search yet. |
 
 - By default it sits on a yellow sticker tile (`tile`), so it stays visible in dark mode.
