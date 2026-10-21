@@ -18,7 +18,7 @@ HISTORY_MESSAGES= 6
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"), max_retries=2, timeout=30.0)
 
 NO_RESULTS=(
-    "I couldn't find anything related in your uploaded videos."
+    "I couldn't find anything related in your uploaded videos. "
     "Try other words, or you can check if the video has finished processing."
 )
 NO_ANSWER="I found related parts of your videos but couldn't write an answer now. Kindly try again."
@@ -83,7 +83,7 @@ def generate(messages: list[dict]) -> str:
         messages=messages,
         temperature=0.2,
         max_completion_tokens=MAX_COMPLETION_TOKENS,
-        reasoning_effort="low",
+        reasoning_effort="medium",
     )
     choice = response.choices[0]
     if choice.finish_reason == "length":
