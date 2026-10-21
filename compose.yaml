@@ -6,9 +6,27 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: videoir
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql
+    restart: unless-stopped
+
+  api:
+    build: ./src/backend
+    env_file: .env
+    enviremonet:
+      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/videoir
+    depends_on: [db]
+    restart: unless-stopped
+    
+  worker:
+    build: ./src/backend
+    command: python -m src.worker.sweep
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/videoir
+    depends_on: [db]
+    restart: unless-stopped
 
 volumes:
   postgres_data:

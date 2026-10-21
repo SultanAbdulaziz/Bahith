@@ -12,10 +12,10 @@ s3: S3Client = boto3.client(
     region_name="auto",
 )
 
-def upload_url(key: str, content_type: str, expires: int = 900) -> str:
+def upload_url(key: str, content_type: str, size_bytes: int, expires: int = 900) -> str:
     return s3.generate_presigned_url(
         "put_object",
-        Params={"Bucket": BUCKET, "Key": key, "ContentType": content_type},
+        Params={"Bucket": BUCKET, "Key": key, "ContentType": content_type, "ContentLength": size_bytes},  #R2 cost guard: R2 rejects any other size
         ExpiresIn=expires,
     )
 

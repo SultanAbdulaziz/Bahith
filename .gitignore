@@ -6,3 +6,5 @@ docs
 .venv/
 .vscode/
 *.db
+
+demo_arabic.mp4

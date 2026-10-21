@@ -19,6 +19,6 @@ def job(db: Session, file: File):
         )
         db.add(document)
     file.status = FileStatus.DONE
-    file.meta = {"duration": transcript.duration}
+    file.meta = {**file.meta, "duration": transcript.duration}  #R2 cost guard: keep "size"
     db.commit()
 

@@ -12,7 +12,7 @@ fileRouter = APIRouter(prefix="/files")
 
 @fileRouter.post("", status_code=201)
 def upload(body: uploadRequest, user_id: uuid.UUID = Depends(authorizeUser), db: Session = Depends(get_db)):
-    (file_id, upload_url) = fileService.createUpload(db, user_id, body.content_type)
+    (file_id, upload_url) = fileService.createUpload(db, user_id, body.content_type, body.size_bytes)  #R2 cost guard
     return {
         "success": True,
         "file_id": file_id,
