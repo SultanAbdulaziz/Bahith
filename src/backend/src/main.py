@@ -7,6 +7,7 @@ from src.auth.middleware import authorizeUser
 from src.search.routes import searchRouter
 from src.file.routes import fileRouter
 from src.file.service import FileError
+from src.demo.routes import demoRouter
 import os
 
 app = FastAPI(title="videoIR")
@@ -24,6 +25,7 @@ api_router = APIRouter(prefix="/api")
 api_router.include_router(authRouter)
 api_router.include_router(searchRouter, dependencies=[Depends(authorizeUser)])
 api_router.include_router(fileRouter, dependencies=[Depends(authorizeUser)])
+api_router.include_router(demoRouter)
 
 @api_router.get("/health")
 def health():

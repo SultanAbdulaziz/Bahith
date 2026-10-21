@@ -1,0 +1,290 @@
+{
+  "common": {
+    "appName": "Bahith",
+    "logIn": "Log in",
+    "signUp": "Create account",
+    "logOut": "Log out",
+    "guest": "Guest",
+    "tryAsGuest": "Try it as a guest",
+    "openApp": "Open the app",
+    "otherLanguage": "العربية",
+    "switchTheme": "Switch theme",
+    "menu": "Menu",
+    "close": "Close",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "video": "Video",
+    "somethingWrong": "Something went wrong. Please try again."
+  },
+  "nav": {
+    "explore": {
+      "label": "Explore",
+      "description": "See what Bahith does.",
+      "demo": "Live demo",
+      "how": "How it works",
+      "features": "Features"
+    },
+    "help": {
+      "label": "Help",
+      "description": "Answers and how we handle your data.",
+      "faq": "Questions",
+      "privacy": "Privacy & data"
+    },
+    "account": {
+      "label": "Account",
+      "description": "Start right away, sign up when you want.",
+      "logIn": "Log in",
+      "signUp": "Create account"
+    }
+  },
+  "landing": {
+    "hero": {
+      "title": "Search inside your videos",
+      "titleAccent": "and jump to the moment."
+    },
+    "demo": {
+      "eyebrow": "Live demo",
+      "placeholder": "Search what was said in this video",
+      "button": "Search",
+      "empty": "Ask me about the video! It's in Arabic, so type a word in Arabic.",
+      "noResults": "No results. Search matches whole words, so try another word.",
+      "noMatches": "No matches for \"{{query}}\"",
+      "unavailable": "The demo isn't available right now.",
+      "searching": "Looking through the video…",
+      "found": "Found {{count}}! Pick one to watch it."
+    },
+    "features": {
+      "eyebrow": "#01 / Features",
+      "title": "No more rewinding to find it.",
+      "subtitle": "Everything you need to find a moment in a long video.",
+      "items": {
+        "jump": {
+          "title": "Go straight to the moment",
+          "body": "Every result comes with a time. Click it and the video plays from there."
+        },
+        "modes": {
+          "title": "Two ways to search",
+          "body": "Best match puts the most relevant moments first. Exact words finds only the words you type, and lets you combine them."
+        },
+        "languages": {
+          "title": "English and Arabic",
+          "body": "Videos spoken in English or Arabic can both be searched."
+        },
+        "guest": {
+          "title": "No account needed",
+          "body": "Try everything as a guest. If you create an account later, your videos come with you."
+        }
+      }
+    },
+    "how": {
+      "eyebrow": "#02 / How it works",
+      "title": "From a long video to the exact moment.",
+      "subtitle": "Three steps, and the last one is the fun part.",
+      "steps": {
+        "upload": {
+          "title": "Upload a video",
+          "body": "Pick a video from your device. A lecture, a meeting, a podcast, anything with speech.",
+          "detail": "Any video file"
+        },
+        "wait": {
+          "title": "Wait a moment",
+          "body": "What's said in the video is turned into text, so you can search it.",
+          "detail": "Short videos: under a minute"
+        },
+        "search": {
+          "title": "Search and jump",
+          "body": "Type a word or phrase. Each result shows when it was said and plays the video from there.",
+          "detail": "Click a result to play"
+        }
+      }
+    },
+    "faq": {
+      "eyebrow": "#03 / Questions",
+      "title": "Questions, answered.",
+      "items": {
+        "account": {
+          "q": "Do I need an account?",
+          "a": "No. You can continue as a guest and use every feature. If you create an account later, the videos you uploaded as a guest stay with your account."
+        },
+        "languages": {
+          "q": "Which languages are supported?",
+          "a": "Spoken English and Arabic."
+        },
+        "time": {
+          "q": "How long until I can search a video?",
+          "a": "It depends on the length of the video. Short videos are usually ready in under a minute."
+        },
+        "privacy": {
+          "q": "Who can see my videos?",
+          "a": "Only you. Nobody else can see, play or search your videos."
+        },
+        "words": {
+          "q": "Why didn't my search find a word?",
+          "a": "Search matches whole words, so \"searching\" won't find \"search\". Try the exact word that was said. Capital letters and punctuation don't matter."
+        },
+        "delete": {
+          "q": "Can I delete a video?",
+          "a": "Yes. Deleting a video removes it completely, and it no longer shows up in search."
+        }
+      }
+    },
+    "cta": {
+      "title": "Find the moment you're looking for.",
+      "subtitle": "Upload a video and search it in minutes. No account needed."
+    }
+  },
+  "footer": {
+    "tagline": "Search inside your videos and jump straight to the moment.",
+    "rights": "© {{year}} Bahith",
+    "backToTop": "Back to the top"
+  },
+  "privacy": {
+    "eyebrow": "Privacy & data",
+    "title": "How your data is used",
+    "updated": "Last updated: October 20, 2026",
+    "intro": "What Bahith keeps when you use it, where it's kept, and how to remove it.",
+    "sections": {
+      "account": {
+        "title": "Your account",
+        "body": [
+          "If you continue as a guest, we create an account with no email or name. It's linked to this browser.",
+          "If you create an account, we keep your email, your name if you give one, and your password in a scrambled form that can't be turned back into your password."
+        ]
+      },
+      "videos": {
+        "title": "Your videos",
+        "body": [
+          "When you upload a video, it goes straight from your browser to our file storage at Cloudflare. Videos aren't public. They can only be played through links that are made for you and stop working after an hour.",
+          "Only you can see, play or search your videos."
+        ]
+      },
+      "transcription": {
+        "title": "Turning speech into text",
+        "body": [
+          "To make a video searchable, we send its sound (not the picture) to Groq, an outside company that turns speech into text. Groq handles it under its own privacy policy.",
+          "The text we get back is saved with your video so you can search it."
+        ]
+      },
+      "cookies": {
+        "title": "Staying logged in",
+        "body": [
+          "We save two small login files (cookies) in your browser. They're only used to keep you logged in, for up to 14 days.",
+          "Your language and light or dark choice are also saved in your browser. They don't leave your device."
+        ]
+      },
+      "tracking": {
+        "title": "No ads or trackers",
+        "body": [
+          "We don't track you or show ads. Your videos and their text are only used so you can search them."
+        ]
+      },
+      "deletion": {
+        "title": "Deleting your data",
+        "body": [
+          "Deleting a video removes it and its text right away.",
+          "Deleting a whole account isn't possible in the app yet. Until it is, you can delete your videos one by one.",
+          "If you're a guest and your login ends, for example because you cleared your browser data, you can't get back into that guest account. Create an account if you want to keep your videos."
+        ]
+      }
+    }
+  },
+  "auth": {
+    "title": "Welcome",
+    "subtitle": "Log in or create an account to keep your videos.",
+    "tabs": {
+      "login": "Log in",
+      "register": "Create account"
+    },
+    "name": "Name",
+    "optional": "(optional)",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters.",
+    "submitLogin": "Log in",
+    "submitRegister": "Create account",
+    "guestKeepsFiles": "The videos you uploaded as a guest will stay with your new account.",
+    "or": "or",
+    "continueAsGuest": "Continue as a guest",
+    "backToApp": "Back to the app",
+    "backHome": "Back to home",
+    "aside": {
+      "eyebrow": "Bahith",
+      "title": "Every word in your videos,",
+      "titleAccent": "one search away.",
+      "points": {
+        "find": "Find any word that was said",
+        "jump": "Play from the exact moment",
+        "languages": "Works with English and Arabic speech"
+      }
+    },
+    "errors": {
+      "wrongCredentials": "Incorrect email or password.",
+      "emailTaken": "This email is already registered.",
+      "passwordShort": "Password must be at least 8 characters.",
+      "passwordLong": "Password is too long."
+    }
+  },
+  "app": {
+    "nav": {
+      "section": "Menu",
+      "search": "Search",
+      "files": "My videos"
+    },
+    "guestCard": {
+      "title": "You're using a guest account",
+      "body": "Your videos are tied to this browser. Create an account to keep them."
+    },
+    "upload": {
+      "button": "Upload video",
+      "dialogTitle": "Upload a video",
+      "dialogDescription": "Once it's ready, you can search what was said in it.",
+      "drop": "Drop a video here, or click to choose one",
+      "hint": "Video files only",
+      "notVideo": "\"{{name}}\" is not a video file.",
+      "failed": "Couldn't upload \"{{name}}\".",
+      "done": "\"{{name}}\" was uploaded. It will be searchable once it's ready."
+    },
+    "files": {
+      "eyebrow": "Videos",
+      "title": "My videos",
+      "subtitle": "Videos you uploaded and whether they're ready to search.",
+      "emptyTitle": "No videos yet",
+      "emptyBody": "Upload a video to start searching inside it.",
+      "status": {
+        "uploading": "Upload not finished",
+        "pending": "Waiting",
+        "processing": "Getting ready",
+        "done": "Ready",
+        "failed": "Failed"
+      },
+      "deleteTitle": "Delete this video?",
+      "deleteBody": "It will be removed completely and won't show up in search anymore.",
+      "deleted": "Video deleted."
+    },
+    "search": {
+      "eyebrow": "Search",
+      "title": "Find a moment",
+      "placeholder": "Search what was said in your videos",
+      "button": "Search",
+      "modes": {
+        "bm25": "Best match",
+        "boolean": "Exact words"
+      },
+      "modeHelp": {
+        "bm25": "Shows the most relevant moments first.",
+        "boolean": "Finds only the exact words you type. A space between words finds any of them, & finds them together. Example: exam&date"
+      },
+      "startTitle": "Search your videos",
+      "startBody": "Type a word or phrase that was said in one of your videos.",
+      "noVideosTitle": "Nothing to search yet",
+      "noVideosBody": "Upload a video first. Once it's ready, you can search it here.",
+      "noVideosAction": "Go to my videos",
+      "noResultsTitle": "No results",
+      "noResultsBody": "Try a different word. Search matches whole words only.",
+      "resultsCount": "Results: {{count}}",
+      "matchesCount": "Matches: {{total}}, showing {{count}}",
+      "playerEmpty": "Pick a result to play it here.",
+      "playError": "Couldn't play this video."
+    }
+  }
+}
