@@ -3,6 +3,7 @@ from fastapi.responses import JSONResponse
 from src.auth.service import AuthError
 from src.auth.routes import authRouter
 from src.search.routes import searchRouter
+from src.chatbot.routes import chatRouter
 
 app = FastAPI(title="videoIR")
 
@@ -10,6 +11,7 @@ app = FastAPI(title="videoIR")
 api_router = APIRouter(prefix="/api")
 api_router.include_router(authRouter)
 api_router.include_router(searchRouter)
+api_router.include_router(chatRouter)
 
 @api_router.get("/health")
 def health():
