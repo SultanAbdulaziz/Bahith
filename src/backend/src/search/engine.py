@@ -3,7 +3,7 @@
 A corpus is a list of documents (strings). A document's id is its position in
 that list. Only the Python standard library is used.
 
-Experiments (part c):  python -m core.search corpus.json "query one" "query two" ...
+Experiments (part c), from src/backend:  python -m src.search.engine corpus.json "query one" "query two" ...
 """
 
 import json
@@ -53,7 +53,7 @@ K1 = 1.2
 B = 0.75
 
 
-def bm25_search(query: str, index: Index, doc_lengths: list[int], k: int = 10) -> list[tuple[int, float]]:
+def bm25_search(query: str, index: Index, doc_lengths: list[int], k: int | None = 10) -> list[tuple[int, float]]:
     """Rank documents by BM25 and return the top k (doc_id, score) pairs, best first.
 
     doc_lengths holds the number of tokens of each document, in corpus order.
@@ -70,7 +70,7 @@ def bm25_search(query: str, index: Index, doc_lengths: list[int], k: int = 10) -
             norm = K1 * (1 - B + B * doc_lengths[doc_id] / avgdl)
             scores[doc_id] = scores.get(doc_id, 0.0) + idf * tf * (K1 + 1) / (tf + norm)
     ranked = sorted(scores.items(), key=lambda item: (-item[1], item[0]))
-    return ranked[:k]
+    return ranked if k is None else ranked[:k]
 
 
 def document_lengths(corpus: list[str]) -> list[int]:
@@ -95,6 +95,6 @@ def run_experiments(corpus: list[str], queries: list[str]) -> None:
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        sys.exit('usage: python -m core.search corpus.json "query" ["query" ...]   (corpus: JSON list of strings)')
+        sys.exit('usage: python -m src.search.engine corpus.json "query" ["query" ...]   (corpus: JSON list of strings)')
     with open(sys.argv[1], encoding="utf-8") as f:
         run_experiments(json.load(f), sys.argv[2:])

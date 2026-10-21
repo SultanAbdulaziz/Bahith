@@ -9,6 +9,7 @@ from src.file.routes import fileRouter
 from src.file.service import FileError
 from src.demo.routes import demoRouter
 import os
+from src.chatbot.routes import chatRouter
 
 app = FastAPI(title="videoIR")
 
@@ -26,6 +27,8 @@ api_router.include_router(authRouter)
 api_router.include_router(searchRouter, dependencies=[Depends(authorizeUser)])
 api_router.include_router(fileRouter, dependencies=[Depends(authorizeUser)])
 api_router.include_router(demoRouter)
+api_router.include_router(searchRouter)
+api_router.include_router(chatRouter)
 
 @api_router.get("/health")
 def health():
