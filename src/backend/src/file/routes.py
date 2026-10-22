@@ -31,6 +31,10 @@ def getfiles(user_id: uuid.UUID = Depends(authorizeUser), db: Session = Depends(
 def getfile(file_id:uuid.UUID, user_id: uuid.UUID = Depends(authorizeUser), db: Session = Depends(get_db)):
     return fileService.getFile(db, user_id, file_id) 
 
+@fileRouter.get("/{file_id}/transcript")
+def transcript(file_id: uuid.UUID, user_id: uuid.UUID = Depends(authorizeUser), db: Session = Depends(get_db)):
+    return [row._asdict() for row in fileService.getTranscript(db, user_id, file_id)]
+
 @fileRouter.delete("/{file_id}", status_code=204)
 def delete(file_id:uuid.UUID, user_id: uuid.UUID = Depends(authorizeUser), db: Session = Depends(get_db)):
     fileService.deleteFile(db, user_id, file_id)

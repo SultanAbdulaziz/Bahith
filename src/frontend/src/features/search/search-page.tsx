@@ -49,7 +49,6 @@ export default function SearchPage() {
         searching={search.searching}
         placeholder={t("app.search.placeholder")}
         autoFocus
-        showModeHelp
       />
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">

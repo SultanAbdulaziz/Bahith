@@ -263,7 +263,8 @@
     box-shadow: 6px 6px 0 0 var(--shadow);
 }
 [data-slot="dropdown-menu-content"],
-[data-slot="select-content"] {
+[data-slot="select-content"],
+[data-slot="popover-content"] {
     border: 2px solid var(--ink);
     box-shadow: 4px 4px 0 0 var(--shadow);
 }

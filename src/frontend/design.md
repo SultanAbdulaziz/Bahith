@@ -66,7 +66,7 @@ Installed with `npx shadcn@latest add …`. **Don't edit the files in `src/compo
 - `button`: ink outline, hard shadow, press effect. `default` is yellow, `outline`/`secondary` are white cards,
   `ghost`/`link` have no outline. Background colors come from these rules, so a `className` can't override a button's background.
 - `input`, `badge`, `tabs-list`/`tabs-trigger` (active = yellow), `toggle-group-item` (on = yellow), `progress`,
-  `dialog-content`, `alert-dialog-content`, `dropdown-menu-content`, `select-content`, `input-group` (the chat's question box),
+  `dialog-content`, `alert-dialog-content`, `dropdown-menu-content`, `select-content`, `popover-content`, `input-group` (the chat's question box),
   the sidebar edge and active sidebar item, toasts.
 
 The dashboard shell is the shadcn `sidebar-07` block (`src/features/dashboard/components/`).

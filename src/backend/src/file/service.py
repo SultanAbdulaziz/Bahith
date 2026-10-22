@@ -1,7 +1,7 @@
 import uuid
 from sqlalchemy import insert, update, select, delete, func
 from sqlalchemy.orm import Session
-from db.models import File
+from db.models import Document, File
 from db.models.file import FileStatus
 from src.storage import service as storageService
 from sqlalchemy.exc import NoResultFound
@@ -67,6 +67,14 @@ def getFile(db: Session, user_id: uuid.UUID, file_id: uuid.UUID):
         raise FileError("file not found")
     return storageService.download_url(key)
     
+def getTranscript(db: Session, user_id: uuid.UUID, file_id: uuid.UUID):
+    return db.execute(
+        select(Document.text, Document.meta)
+        .join(File, Document.file_id == File.id)
+        .where(File.user_id == user_id, File.id == file_id)
+        .order_by(Document.id)
+    ).all()
+
 def deleteFile(db: Session, user_id: uuid.UUID, file_id: uuid.UUID):
     try:
         (key,) = db.execute(

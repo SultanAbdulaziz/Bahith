@@ -15,3 +15,9 @@ export type Upload = {
   name: string
   progress: number
 }
+
+// One 15-second piece of a video's transcript.
+export type TranscriptPiece = {
+  text: string
+  meta: { start: number; end: number }
+}

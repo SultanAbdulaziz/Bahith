@@ -6,6 +6,7 @@ import { Spinner } from "@/components/ui/spinner"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
 import type { SearchMode } from "../types"
+import { SearchHelp } from "./search-help"
 
 type SearchBoxProps = {
   query: string
@@ -17,7 +18,6 @@ type SearchBoxProps = {
   placeholder: string
   disabled?: boolean
   autoFocus?: boolean
-  showModeHelp?: boolean
   className?: string
 }
 
@@ -32,7 +32,6 @@ export function SearchBox({
   placeholder,
   disabled,
   autoFocus,
-  showModeHelp,
   className,
 }: SearchBoxProps) {
   const { t } = useTranslation()
@@ -65,11 +64,7 @@ export function SearchBox({
             {t("app.search.modes.boolean")}
           </ToggleGroupItem>
         </ToggleGroup>
-        {showModeHelp && (
-          <p className="min-w-0 flex-1 text-xs text-muted-foreground max-sm:hidden">
-            {t(`app.search.modeHelp.${mode}`)}
-          </p>
-        )}
+        <SearchHelp />
         <Button
           type="submit"
           size="icon"

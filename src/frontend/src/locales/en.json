@@ -259,6 +259,9 @@
         "failed": "Failed"
       },
       "watch": "Watch",
+      "transcript": "Transcript",
+      "transcriptPending": "The transcript shows up here once the video is ready.",
+      "transcriptEmpty": "No speech was found in this video.",
       "deleteTitle": "Delete this video?",
       "deleteBody": "It will be removed completely and won't show up in search anymore.",
       "deleted": "Video deleted."
@@ -272,9 +275,26 @@
         "bm25": "Best match",
         "boolean": "Exact words"
       },
-      "modeHelp": {
-        "bm25": "Shows the most relevant moments first.",
-        "boolean": "Finds only the exact words you type. A space between words finds any of them, & finds them together. Example: exam&date"
+      "help": {
+        "open": "How search works",
+        "title": "How search works",
+        "bm25": "shows the moments that fit your words best first. Just type naturally.",
+        "boolean": "finds only moments that contain the words you type.",
+        "examples": [
+          {
+            "query": "exam date",
+            "meaning": "exam or date"
+          },
+          {
+            "query": "exam&date",
+            "meaning": "exam and date together"
+          },
+          {
+            "query": "exam date&time",
+            "meaning": "exam, or date and time together"
+          }
+        ],
+        "wholeWords": "It matches whole words, so type each word the way it was said. Capital letters don't matter."
       },
       "startTitle": "Search your videos",
       "startBody": "Type a word or phrase that was said in one of your videos.",

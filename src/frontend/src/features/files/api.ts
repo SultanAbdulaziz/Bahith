@@ -1,5 +1,5 @@
 import { api } from "@/lib/api"
-import type { VideoFile } from "./types"
+import type { TranscriptPiece, VideoFile } from "./types"
 
 // One function per step of the upload flow and per files endpoint.
 
@@ -37,4 +37,9 @@ export function completeUpload(fileId: string) {
 
 export function deleteFile(fileId: string) {
   return api(`/files/${fileId}`, { method: "DELETE" })
+}
+
+// The video's whole transcript, in 15-second pieces. Empty until the video is processed.
+export function getTranscript(fileId: string) {
+  return api<TranscriptPiece[]>(`/files/${fileId}/transcript`)
 }
