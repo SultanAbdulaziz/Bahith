@@ -24,11 +24,10 @@ app.add_middleware(
 #Main Router (api_router) .include_router() to mount service routers ~Sultan
 api_router = APIRouter(prefix="/api")
 api_router.include_router(authRouter)
+api_router.include_router(demoRouter)
 api_router.include_router(searchRouter, dependencies=[Depends(authorizeUser)])
 api_router.include_router(fileRouter, dependencies=[Depends(authorizeUser)])
-api_router.include_router(demoRouter)
-api_router.include_router(searchRouter)
-api_router.include_router(chatRouter)
+api_router.include_router(chatRouter, dependencies=[Depends(authorizeUser)])
 
 @api_router.get("/health")
 def health():

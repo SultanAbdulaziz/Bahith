@@ -7,9 +7,12 @@ export function listFiles() {
   return api<VideoFile[]>("/files")
 }
 
-// Step 1: ask the backend for an upload URL.
-export function createUpload(contentType: string) {
-  return api<{ file_id: string; upload_url: string }>("/files", { method: "POST", json: { content_type: contentType } })
+// Step 1: ask the backend for an upload URL. The URL only accepts a file of exactly this size.
+export function createUpload(contentType: string, sizeBytes: number) {
+  return api<{ file_id: string; upload_url: string }>("/files", {
+    method: "POST",
+    json: { content_type: contentType, size_bytes: sizeBytes },
+  })
 }
 
 // Step 2: send the file straight to storage. XHR instead of fetch, because fetch can't report upload progress.

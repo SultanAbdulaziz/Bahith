@@ -339,3 +339,10 @@
         animation: none !important;
     }
 }
+
+/* Theme switch (Magic UI animated theme toggler): the new theme grows in a circle from the button. */
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}

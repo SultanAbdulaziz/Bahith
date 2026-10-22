@@ -71,6 +71,9 @@ Installed with `npx shadcn@latest add …`. **Don't edit the files in `src/compo
 
 The dashboard shell is the shadcn `sidebar-07` block (`src/features/dashboard/components/`).
 
+The theme switch is Magic UI's `animated-theme-toggler` (also a shadcn registry, in `src/components/ui/`), driven by our
+theme provider through its `theme` / `onThemeChange` props and styled as a ghost icon button.
+
 ### React Bits
 
 Installed with `npx shadcn@latest add @react-bits/<Name>-TS-TW`; they land in `src/components/`. Use them as they come.
@@ -123,6 +126,7 @@ where they're used, or through `data-slot` rules. In use: `Conversation` (scroll
     call-to-action block, empty states, the login page side panel.
   - Both animate when scrolled into view, or on page open with `onMount`. Give a container a `stagger` to bring its
     children in one after another.
+- Switching light/dark grows the new theme in a circle from the switch (View Transitions; instant with reduced motion).
 - Headline words rise in (`SplitText`). Speech bubbles pop when their text changes (`animate-in zoom-in-90`).
 - The landing hero has the React Bits **Balatro** swirl behind it, in the brand colors. Nowhere else gets an animated
   background; use the still halftone `dotPattern` (from `lib/styles.ts`) when an area needs texture.

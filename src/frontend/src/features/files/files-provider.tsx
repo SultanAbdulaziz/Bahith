@@ -50,7 +50,7 @@ export function FilesProvider({ children }: { children: ReactNode }) {
 
     setUploads((list) => [...list, { key, name: file.name, progress: 0 }])
     try {
-      const { file_id, upload_url } = await filesApi.createUpload(file.type)
+      const { file_id, upload_url } = await filesApi.createUpload(file.type, file.size)
       await filesApi.uploadToStorage(upload_url, file, setProgress)
       await filesApi.completeUpload(file_id)
       toast.success(t("app.upload.done", { name: file.name }))
