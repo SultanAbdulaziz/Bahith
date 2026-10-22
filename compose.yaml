@@ -4,7 +4,7 @@ services:
     container_name: postgres-dev
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: videoir
+      POSTGRES_DB: anything
     ports:
       - "127.0.0.1:5432:5432"
     volumes:
@@ -13,13 +13,17 @@ services:
 
   api:
     build: ./src/backend
+    command: sh -c "alembic -c db/alembic.ini upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000"
     env_file: .env
     ports:
       - "127.0.0.1:8000:8000"
     environment:
-      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/videoir
-    command: sh -c "alembic -c db/alembic.ini upgrade head && uvicorn src.main:app --host 0.0.0.0 --port 8000"
-    depends_on: [db]
+      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/anything
+      S3_ENDPOINT_URL: http://s3.localhost:8333
+      S3_ACCESS_KEY: anything
+      S3_SECRET_KEY: anything
+      S3_BUCKET: anything
+    depends_on: [db, s3.localhost]
     restart: unless-stopped
     
   worker:
@@ -27,9 +31,27 @@ services:
     command: python -m src.worker.sweep
     env_file: .env
     environment:
-      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/videoir
-    depends_on: [db]
+      DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/anything
+      S3_ENDPOINT_URL: http://s3.localhost:8333
+      S3_ACCESS_KEY: anything
+      S3_SECRET_KEY: anything
+      S3_BUCKET: anything
+    depends_on: [db, s3.localhost]
     restart: unless-stopped
+
+  s3.localhost: 
+    image: chrislusf/seaweedfs
+    command: server -s3 -dir=/data
+    environment:
+      AWS_ACCESS_KEY_ID: anything
+      AWS_SECRET_ACCESS_KEY: anything
+    ports:
+      - "127.0.0.1:8333:8333"
+    volumes:
+      - s3_data:/data
+    restart: unless-stopped
+
 
 volumes:
   postgres_data:
+  s3_data:

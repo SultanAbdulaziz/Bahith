@@ -1,6 +1,7 @@
 import os
 import boto3
 from types_boto3_s3 import S3Client
+from botocore.exceptions import ClientError
 
 BUCKET = os.environ["S3_BUCKET"]
 
@@ -11,6 +12,11 @@ s3: S3Client = boto3.client(
     aws_secret_access_key=os.environ["S3_SECRET_KEY"],
     region_name="auto",
 )
+
+try:
+    s3.head_bucket(Bucket=BUCKET)
+except ClientError:
+    s3.create_bucket(Bucket=BUCKET)
 
 def upload_url(key: str, content_type: str, size_bytes: int, expires: int = 900) -> str:
     return s3.generate_presigned_url(
