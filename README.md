@@ -6,7 +6,7 @@
 
 **Search what's *said* inside your videos and jump straight to the moment.**
 
-[**Live demo →**]([https://video-information-retrieval.vercel.app/](https://bahith.scholarops.dev/))
+[**Live demo →**](https://bahith.scholarops.dev/)
 
 <img src=".github/screenshots/hero.png" alt="Bahith landing page" />
 
