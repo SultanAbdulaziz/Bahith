@@ -19,11 +19,15 @@ services:
       - "127.0.0.1:8000:8000"
     environment:
       DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/anything
-      S3_ENDPOINT_URL: http://s3.localhost:8333
+      S3_ENDPOINT_URL: http://s3.localhost:9000
       S3_ACCESS_KEY: anything
       S3_SECRET_KEY: anything
       S3_BUCKET: anything
-    depends_on: [db, s3.localhost]
+    depends_on:
+      db:
+        condition: service_started
+      s3.localhost:
+        condition: service_healthy
     restart: unless-stopped
     
   worker:
@@ -32,26 +36,47 @@ services:
     env_file: .env
     environment:
       DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD}@db:5432/anything
-      S3_ENDPOINT_URL: http://s3.localhost:8333
+      S3_ENDPOINT_URL: http://s3.localhost:9000
       S3_ACCESS_KEY: anything
       S3_SECRET_KEY: anything
       S3_BUCKET: anything
-    depends_on: [db, s3.localhost]
+    depends_on:
+      db:
+        condition: service_started
+      s3.localhost:
+        condition: service_healthy
     restart: unless-stopped
 
-  s3.localhost: 
-    image: chrislusf/seaweedfs
-    command: server -s3 -dir=/data
-    environment:
-      AWS_ACCESS_KEY_ID: anything
-      AWS_SECRET_ACCESS_KEY: anything
+  frontend:
+    build:
+      context: ./src/frontend
+      args:
+        VITE_API_URL: http://localhost:8000/api
     ports:
-      - "127.0.0.1:8333:8333"
+      - "127.0.0.1:3030:80"
+    depends_on: [api]
+    restart: unless-stopped
+
+  s3.localhost:
+    image: rustfs/rustfs:1.0.3
+    environment:
+      RUSTFS_ACCESS_KEY: anything
+      RUSTFS_SECRET_KEY: anything
+      RUSTFS_CONSOLE_ENABLE: "true"
+      RUSTFS_CORS_ALLOWED_ORIGINS: http://localhost:3030
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
     volumes:
-      - s3_data:/data
+      - rustfs_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     restart: unless-stopped
 
 
 volumes:
   postgres_data:
-  s3_data:
+  rustfs_data:

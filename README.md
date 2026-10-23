@@ -58,24 +58,26 @@ flowchart LR
 |---|---|
 | **Backend** | Python 3.14, FastAPI, SQLAlchemy 2, Alembic, PostgreSQL 18 |
 | **AI** | Groq: Whisper for speech to text, `gpt-oss-20b` for chat |
-| **Storage** | S3-compatible: Cloudflare R2 in production, SeaweedFS locally |
+| **Storage** | S3-compatible: Cloudflare R2 in production, RustFS locally |
 | **Frontend** | React 19, TypeScript, Vite, Tailwind v4, shadcn/ui, GSAP, i18next |
 
 ## Run it locally
 
-You need Docker, Node 20.19+, and a free [Groq API key](https://console.groq.com).
+You need Docker and a free [Groq API key](https://console.groq.com).
 
 ```bash
 cp example.env .env              # add your GROQ_API_KEY and a JWT_SECRET
-docker compose up --build        # database, storage, API and worker
-
-# once, in another terminal: create the storage bucket
-echo "s3.bucket.create -name anything" | docker compose exec -T s3.localhost weed shell
-
-cd src/frontend && npm install && npm run dev
+docker compose up --build        # database, storage, API, worker and frontend
 ```
 
-Open http://localhost:3030. The API docs are at http://localhost:8000/docs.
+Open http://localhost:3030. The API docs are at http://localhost:8000/docs. The storage bucket is created on first start; browse it in the RustFS console at http://localhost:9001 (login `anything` / `anything`).
+
+For frontend hot reload (needs Node 20.19+), stop the frontend container first, because it uses the same port:
+
+```bash
+docker compose stop frontend
+cd src/frontend && npm install && npm run dev
+```
 
 To make the landing page demo work, upload a video, put your user id (from `GET /api/auth/me`) in `DEMO_USER_ID`, and restart the API.
 
